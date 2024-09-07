@@ -15,16 +15,22 @@ table {
   }
   
   td, th {
-    padding: 8px;
     max-width: 150px;        /* Individual cell maximum width for overflow handling */
   } 
 
   .notes-header {
     text-align: center;
+  }
+
+  .notes-header th{
+    color: #ff0f0f;
+    text-shadow: 1px 1px black;
+    font-size: 35px;
     font-weight: bold;
     font-family: "Lucida Console", "Courier New", monospace;
   }
-  
+
+ 
   .note {
     max-width: 300px;      /* Maximum row width */
     height: 46px;          /* Maximum row height */
@@ -33,6 +39,7 @@ table {
 
   .note td {
     text-align: left;
+    color: #ecf0f1;
     max-width: 300px;
     height: 46px;          /* Ensures all rows conform to height */
     font-family: " 'Lucida Handwriting',cursive"          
