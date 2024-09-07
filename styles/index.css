@@ -1,6 +1,10 @@
 body {
-    background-image: url('../images/Background.jpeg');
+    background-image: url('../images/Wood_Background.jpeg');
     background-size: cover; /* Cover the entire area */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent repeating */
+    height: 300px;
+    width: 300px;
+    margin: 0;
+    padding: 0;
 }
