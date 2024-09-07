@@ -8,3 +8,33 @@ body {
     margin: 0;
     padding: 0;
 }
+
+table {
+    width: 100%;         /* Table takes full available width */
+    border-collapse: collapse;  /* Removes space between table cells */
+  }
+  
+  td, th {
+    padding: 8px;
+    max-width: 150px;        /* Individual cell maximum width for overflow handling */
+  } 
+
+  .notes-header {
+    text-align: center;
+    font-weight: bold;
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+  
+  .note {
+    max-width: 300px;      /* Maximum row width */
+    height: 46px;          /* Maximum row height */
+    overflow: hidden;      /* Hide any overflow text */
+  }
+
+  .note td {
+    text-align: left;
+    max-width: 300px;
+    height: 46px;          /* Ensures all rows conform to height */
+    font-family: " 'Lucida Handwriting',cursive"          
+  }
+  
