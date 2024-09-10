@@ -39,7 +39,9 @@ table {
 
   .note td {
     text-align: left;
-    color: #ecf0f1;
+    color: #f4f419;
+    font-weight: bold;
+    text-shadow: 1px 1px black;
     max-width: 300px;
     height: 46px;          /* Ensures all rows conform to height */
     font-family: " 'Lucida Handwriting',cursive"          
