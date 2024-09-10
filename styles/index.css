@@ -38,12 +38,33 @@ table {
   }
 
   .note td {
-    text-align: left;
-    color: #f4f419;
-    font-weight: bold;
-    text-shadow: 1px 1px black;
-    max-width: 300px;
     height: 46px;          /* Ensures all rows conform to height */
-    font-family: " 'Lucida Handwriting',cursive"          
+    max-width: 300px;
+  }
+
+  .input-note {
+    width: 100%;          /* Make input the same width as the td */
+    border: none;         /* Remove the border */
+    background-color: transparent; /* No background color */
+    padding: 0;           /* Remove padding to match the size exactly */
+    box-sizing: border-box; /* Ensure the input size includes padding and borders */
+    text-align: left;
+    color: #fff523;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 1px 1px black;
+    font-family: " 'Lucida Handwriting',cursive";       
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   
+  }
+
+  .input-note::placeholder {
+    color: #fff523;
+    font-weight: normal;
+    opacity: 0.8;
   }
   
+  .input-note:focus {
+    outline: none;        /* Remove the outline when the input is focused */
+  }
