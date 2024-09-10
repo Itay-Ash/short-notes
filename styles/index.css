@@ -63,6 +63,7 @@ table {
     color: #fff523;
     font-weight: normal;
     opacity: 0.8;
+    font-style: italic;
   }
   
   .input-note:focus {
