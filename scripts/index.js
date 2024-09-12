@@ -1,3 +1,5 @@
+
+//Makes placeholder appear only on hover
 const inputs = document.querySelectorAll('.input-note');
 
 inputs.forEach(input => {
