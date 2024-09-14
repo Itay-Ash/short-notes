@@ -1,5 +1,7 @@
 const inputs = document.querySelectorAll('.input-note');
 const start_char = '●';
+const savedData = localStorage.getItem('inputData');
+const savedValues = savedData.split('\n');
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
@@ -60,27 +62,23 @@ function saveData() {
 }
 
 // Function to load data from localStorage
-function loadData() {
-  const savedData = localStorage.getItem('inputData');
+function load_input_data(input, index) {
   if (savedData) {
-    const savedValues = savedData.split('\n'); // Assuming data is line-separated
-    inputs.forEach((input, index) => {
-      input.value = savedValues[index] || '';
-    });
+    input.value = savedValues[index];
+    general_input_management(input); 
   }
 }
 
-// Load data when the page loads
-loadData();
-
-inputs.forEach(input => {
-  
-  manage_placeholder_visibility(input)
-
+//General functionality for the inputs (notes)
+inputs.forEach((input, index) => {
+  //1: Load every note's previous data.
+  load_input_data(input, index);
+  //2: Manage placeholder's visibility for nicer experience.
+  manage_placeholder_visibility(input);
+  //3: Add all necessary input functionality.
   input.addEventListener('input', function() {
     general_input_management(input);
   });
-
   input.addEventListener('paste', function(e) {
     general_input_management(input);
   });
