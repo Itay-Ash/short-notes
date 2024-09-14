@@ -5,6 +5,28 @@ function containsHebrew(text) {
   return /[\u0590-\u05FF]/.test(text); // Unicode range for Hebrew characters
 }
 
+  // Function to load data from localStorage
+  function loadData() {
+    const savedData = localStorage.getItem('inputData');
+    if (savedData) {
+      const savedValues = savedData.split('\n'); // Assuming data is line-separated
+      inputs.forEach((input, index) => {
+        input.value = savedValues[index] || '';
+      });
+    }
+  }
+
+  // Function to save data to localStorage
+  function saveData() {
+    const content = Array.from(inputs).map(input => input.value).join('\n');
+    localStorage.setItem('inputData', content);
+  }
+
+  
+  // Load data when the page loads
+  loadData();
+
+
 inputs.forEach(input => {
 
   // Makes placeholder appear only on hover
@@ -49,6 +71,9 @@ inputs.forEach(input => {
   }
 
   input.addEventListener('input', function() {
+    //Save Data on input change
+    saveData();
+    //Change text accordingly
     let currentValue = input.value;
     manage_start_char(currentValue);
     shift_text(currentValue);
@@ -56,9 +81,15 @@ inputs.forEach(input => {
 
   // Handle pasting text into the input
   input.addEventListener('paste', function(e) {
+    //Save Data on input change
+    saveData();
+    //Change text accordingly
     let currentValue = input.value;
     manage_start_char(currentValue);
     shift_text(currentValue);
   });
   ////////////////////////////////////////////////////
+
+
 });
+
