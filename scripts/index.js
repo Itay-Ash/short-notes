@@ -1,16 +1,16 @@
-const inputs = document.querySelectorAll('.input-note');
-const start_char = '●';
+const inputNotes = document.querySelectorAll('.input-note');
+const startChar = '●';
 const savedData = localStorage.getItem('inputData');
-const savedValues = savedData.split('\n');
+const savedValues = savedData ? savedData.split('\n') : [];
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
   return /[\u0590-\u05FF]/.test(text); // Unicode range for Hebrew characters
 }
 
-// Function to Check if the input contains Hebrew and set text direction and alignment
-function shift_text_by_language(input, currentValue) {
-  if (containsHebrew(currentValue)) {
+// Function to check if the input contains Hebrew and set text direction and alignment
+function adjustTextDirection(input, text) {
+  if (containsHebrew(text)) {
     input.style.direction = 'rtl';  // Right-to-left for Hebrew text
     input.style.textAlign = 'right'; // Align text to the right for Hebrew
   } else {
@@ -19,68 +19,68 @@ function shift_text_by_language(input, currentValue) {
   }
 }
 
-// Function to Ensure the text starts with start_char
-function manage_start_char(input, currentValue) {
-  if (currentValue && !currentValue.startsWith(start_char)) {
-    currentValue = start_char + currentValue;
-    input.value = currentValue;
+// Function to ensure the text starts with startChar
+function ensureStartChar(input, text) {
+  if (text && !text.startsWith(startChar)) {
+    input.value = startChar + text;
   }
 
-  // Remove the start_char if it's the only character
-  if (currentValue === start_char) {
+  // Remove startChar if it's the only character
+  if (text === startChar) {
     input.value = '';
   }
 }
-  //Function to Make the placeholder appear only on hover
-  function manage_placeholder_visibility(input){
-    const placeholderText = input.getAttribute('placeholder');
 
-    input.setAttribute('placeholder', ''); // Hides placeholder initially
-  
-    input.addEventListener('mouseenter', function() {
-      input.setAttribute('placeholder', placeholderText); // Show placeholder on hover
-    });
-    input.addEventListener('mouseleave', function() {
-      input.setAttribute('placeholder', ''); // Hide placeholder when not hovering
-    });
+// Function to handle placeholder visibility on hover
+function handlePlaceholderVisibility(input) {
+  const placeholderText = input.getAttribute('placeholder');
+  input.setAttribute('placeholder', ''); // Hide placeholder initially
+
+  input.addEventListener('mouseenter', function() {
+    input.setAttribute('placeholder', placeholderText); // Show placeholder on hover
+  });
+
+  input.addEventListener('mouseleave', function() {
+    input.setAttribute('placeholder', ''); // Hide placeholder when not hovering
+  });
 }
 
-//Function to manage all neccesary changes and loads on inputs
-function general_input_management(input){
-    // Save Data on input change
-    saveData();
-    // Change text accordingly
-    let currentValue = input.value;
-    manage_start_char(input, currentValue);
-    shift_text_by_language(input, currentValue);
+// Function to manage input events (save data, adjust text direction, and ensure startChar)
+function handleInputEvents(input) {
+  saveInputData(); // Save input data to localStorage
+  const text = input.value;
+  ensureStartChar(input, text); // Ensure text starts with startChar
+  adjustTextDirection(input, text); // Adjust text direction based on language
 }
 
-// Function to save data to localStorage
-function saveData() {
-  const content = Array.from(inputs).map(input => input.value).join('\n');
+// Function to save input data to localStorage
+function saveInputData() {
+  const content = Array.from(inputNotes).map(input => input.value).join('\n');
   localStorage.setItem('inputData', content);
 }
 
-// Function to load data from localStorage
-function load_input_data(input, index) {
-  if (savedData) {
+// Function to load saved data into inputs
+function loadInputData(input, index) {
+  if (savedData && savedValues[index]) {
     input.value = savedValues[index];
-    general_input_management(input); 
+    handleInputEvents(input); // Ensure text and direction are adjusted after loading
   }
 }
 
-//General functionality for the inputs (notes)
-inputs.forEach((input, index) => {
-  //1: Load every note's previous data.
-  load_input_data(input, index);
-  //2: Manage placeholder's visibility for nicer experience.
-  manage_placeholder_visibility(input);
-  //3: Add all necessary input functionality.
+// Initialize functionality for all input elements (notes)
+inputNotes.forEach((input, index) => {
+  // 1. Load saved data for each input field
+  loadInputData(input, index);
+  
+  // 2. Manage placeholder visibility on hover
+  handlePlaceholderVisibility(input);
+
+  // 3. Add event listeners for input and paste events
   input.addEventListener('input', function() {
-    general_input_management(input);
-  });
-  input.addEventListener('paste', function(e) {
-    general_input_management(input);
+    handleInputEvents(input);
   });
 
+  input.addEventListener('paste', function() {
+    handleInputEvents(input);
+  });
 });
