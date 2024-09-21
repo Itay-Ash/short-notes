@@ -1,9 +1,13 @@
-const inputNotes = document.querySelectorAll('.input-note');
 const startChar = '●';
+const positiveDirection = 1;
+const negativeDirection = -1;
+const buttonSelectClassName = "selected-menu-button"
+
+const inputNotes = document.querySelectorAll('.input-note');
+const MenuButtons = document.querySelectorAll('.menu-button');
+
 const savedData = localStorage.getItem('inputData');
 const savedValues = savedData ? savedData.split('\n') : [];
-const PositiveDirection = 1
-const NegativeDirection = -1
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
@@ -81,6 +85,20 @@ function loadInputData(input, index) {
   }
 }
 
+MenuButtons.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const isButtonSelected = button.classList.contains(buttonSelectClassName);
+    
+    // If the button is not already selected
+    if (!isButtonSelected) {
+      // Remove the class from all other buttons
+      MenuButtons.forEach(btn => btn.classList.remove(buttonSelectClassName));
+
+      // Add the selected class to the clicked button
+      button.classList.add(buttonSelectClassName);
+    }
+  });
+});
 // Initialize functionality for all input elements (notes)
 inputNotes.forEach((input, index) => {
   // 1. Load saved data for each input field
@@ -101,17 +119,17 @@ inputNotes.forEach((input, index) => {
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter'){
       event.preventDefault();
-      moveOneNote(index, PositiveDirection)
+      moveOneNote(index, positiveDirection)
     }
 
     if (event.key == 'ArrowDown'){
       event.preventDefault();
-      moveOneNote(index, PositiveDirection)
+      moveOneNote(index, positiveDirection)
     }
 
     if(event.key == "ArrowUp"){
       event.preventDefault();
-      moveOneNote(index, NegativeDirection)
+      moveOneNote(index, negativeDirection)
     }
   });
 });

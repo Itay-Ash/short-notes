@@ -103,3 +103,9 @@ table {
     transform: scale(0.98);          /* Slightly reduce size when pressed */
     box-shadow: none;                /* Remove shadow on press */
   }
+
+  .selected-menu-button {
+    color: #fff;                     /* White text */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transform: scale(1.05);          /* Slightly enlarged */
+  }
