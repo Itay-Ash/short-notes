@@ -2,6 +2,8 @@ const inputNotes = document.querySelectorAll('.input-note');
 const startChar = '●';
 const savedData = localStorage.getItem('inputData');
 const savedValues = savedData ? savedData.split('\n') : [];
+const PositiveDirection = 1
+const NegativeDirection = -1
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
@@ -53,13 +55,16 @@ function handleTextInputEvents(input) {
   adjustTextDirection(input, text); // Adjust text direction based on language
 }
 
-function handleEnterInputEvents(index){
-    const nextInputNote = inputNotes[index + 1];
-    //Focus the next note, if u are currently on the first note - focus the first.
-    if (nextInputNote) 
-      nextInputNote.focus();
-    else
-    inputNotes[0].focus();
+function moveOneNote(index, direction){
+  //Direction decides if the movment will be towards positive or negative.
+  NoteIndex = index + (1 * direction)
+  
+  if (NoteIndex < 0)
+    NoteIndex = inputNotes.length - 1
+  else if (NoteIndex >= inputNotes.length)
+    NoteIndex = 0;
+  const nextInputNote = inputNotes[NoteIndex];
+  nextInputNote.focus()
 }
 
 // Function to save input data to localStorage
@@ -96,8 +101,17 @@ inputNotes.forEach((input, index) => {
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter'){
       event.preventDefault();
-      handleEnterInputEvents(index);
+      moveOneNote(index, PositiveDirection)
     }
 
+    if (event.key == 'ArrowDown'){
+      event.preventDefault();
+      moveOneNote(index, PositiveDirection)
+    }
+
+    if(event.key == "ArrowUp"){
+      event.preventDefault();
+      moveOneNote(index, NegativeDirection)
+    }
   });
 });
