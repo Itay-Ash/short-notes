@@ -1,7 +1,7 @@
 {
   "name": "Short-Notes",
   "description": "An extesions dedicated to make noting easy and fun!",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 3,
   "icons": {
     "16": "images/logos/logo_16.png",
