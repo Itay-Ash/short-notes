@@ -37,25 +37,6 @@ function ensureStartChar(input, text) {
   }
 }
 
-async function getMainURL() {
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  let [tab] = await chrome.tabs.query(queryOptions);
-  const FullURL = tab.url;
-  // String manipulation to extract the main URL
-  let protocolEndIndex = FullURL.indexOf("://") + 3; // Find the end of the protocol
-  let hostEndIndex = FullURL.indexOf("/", protocolEndIndex); // Find the end of the host
-
-  // Handle case where there is no path (like "https://example.com")
-  if (hostEndIndex === -1) {
-    hostEndIndex = FullURL.length; // Use the full length if no path
-  }
-
-  let mainURL = FullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
-  return mainURL;
-}
-
-getMainURL();
-
 // Function to handle placeholder visibility on hover
 function handlePlaceholderVisibility(input) {
   const placeholderText = input.getAttribute('placeholder');
@@ -78,6 +59,7 @@ function handleTextInputEvents(input) {
   adjustTextDirection(input, text); // Adjust text direction based on language
 }
 
+//Function to move One Note up or down
 function moveOneNote(index, direction){
   //Direction decides if the movment will be towards positive or negative.
   NoteIndex = index + (1 * direction)
@@ -89,6 +71,25 @@ function moveOneNote(index, direction){
   const nextInputNote = inputNotes[NoteIndex];
   nextInputNote.focus()
 }
+
+//Function to retrive MainURL
+async function getMainURL() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  const FullURL = tab.url;
+  // String manipulation to extract the main URL
+  let protocolEndIndex = FullURL.indexOf("://") + 3; // Find the end of the protocol
+  let hostEndIndex = FullURL.indexOf("/", protocolEndIndex); // Find the end of the host
+
+  // Handle case where there is no path (like "https://example.com")
+  if (hostEndIndex === -1) {
+    hostEndIndex = FullURL.length; // Use the full length if no path
+  }
+
+  let mainURL = FullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
+  return mainURL;
+}
+
 
 // Function to save input data to localStorage
 function saveInputData() {
