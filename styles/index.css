@@ -69,3 +69,37 @@ table {
   .input-note:focus {
     outline: none;        /* Remove the outline when the input is focused */
   }
+
+  .menu-div {
+    display: flex;
+    justify-content: space-between;  /* Ensures buttons are spaced out */
+    flex-grow: 1;
+  }
+  
+  .menu-button {
+    flex-grow: 1;                   /* Make buttons take equal width */
+    border: none;                    /* No border */
+    background: none;                /* No background */
+    font-size: 1.1rem;               /* Increase font size */
+    font-family: 'Poppins', sans-serif; /* Modern font (import in HTML) */
+    font-weight: 500;                /* Medium weight for better readability */
+    color: #ff0f0f;                     /* Dark text color */
+    letter-spacing: 1px;             /* Add some letter spacing */
+    cursor: pointer;                 /* Cursor pointer on hover */
+    transition: all 0.3s ease;       /* Smooth transition for hover effects */
+    text-transform: uppercase;       /* Make text uppercase */
+    outline: none;                   /* Remove focus outline */
+  }
+  
+  /* Hover effect */
+  .menu-button:hover {
+    color: #fff;                     /* Change text color on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    transform: scale(1.05);          /* Slightly enlarge the button */
+  }
+  
+  /* Active state (when clicked) */
+  .menu-button:active {
+    transform: scale(0.98);          /* Slightly reduce size when pressed */
+    box-shadow: none;                /* Remove shadow on press */
+  }
