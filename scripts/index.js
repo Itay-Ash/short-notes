@@ -6,6 +6,9 @@ const buttonSelectClassName = "selected-menu-button"
 const inputNotes = document.querySelectorAll('.input-note');
 const MenuButtons = document.querySelectorAll('.menu-button');
 
+let notesindex = 0; 
+const currentUrl = getMainURL(); 
+const notesTitle = ["General", currentUrl]
 const savedData = localStorage.getItem('inputData');
 const savedValues = savedData ? savedData.split('\n') : [];
 
