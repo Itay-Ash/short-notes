@@ -3,6 +3,9 @@
   "description": "An extesions dedicated to make noting easy and fun!",
   "version": "0.2",
   "manifest_version": 3,
+  "permissions": [
+    "activeTab"
+  ],
   "icons": {
     "16": "images/logos/logo_16.png",
     "48": "images/logos/logo_48.png",
