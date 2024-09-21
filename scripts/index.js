@@ -46,11 +46,20 @@ function handlePlaceholderVisibility(input) {
 }
 
 // Function to manage input events (save data, adjust text direction, and ensure startChar)
-function handleInputEvents(input) {
+function handleTextInputEvents(input) {
   saveInputData(); // Save input data to localStorage
   const text = input.value;
   ensureStartChar(input, text); // Ensure text starts with startChar
   adjustTextDirection(input, text); // Adjust text direction based on language
+}
+
+function handleEnterInputEvents(index){
+    const nextInputNote = inputNotes[index + 1];
+    //Focus the next note, if u are currently on the first note - focus the first.
+    if (nextInputNote) 
+      nextInputNote.focus();
+    else
+    inputNotes[0].focus();
 }
 
 // Function to save input data to localStorage
@@ -63,7 +72,7 @@ function saveInputData() {
 function loadInputData(input, index) {
   if (savedData && savedValues[index]) {
     input.value = savedValues[index];
-    handleInputEvents(input); // Ensure text and direction are adjusted after loading
+    handleTextInputEvents(input); // Ensure text and direction are adjusted after loading
   }
 }
 
@@ -76,11 +85,19 @@ inputNotes.forEach((input, index) => {
   handlePlaceholderVisibility(input);
 
   // 3. Add event listeners for input and paste events
-  input.addEventListener('input', function() {
-    handleInputEvents(input);
+  input.addEventListener('input', () => {
+    handleTextInputEvents(input);
   });
 
-  input.addEventListener('paste', function() {
-    handleInputEvents(input);
+  input.addEventListener('paste', () => {
+    handleTextInputEvents(input);
+  });
+
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      handleEnterInputEvents(index);
+    }
+
   });
 });
