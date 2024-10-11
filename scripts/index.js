@@ -9,7 +9,7 @@ const MenuButtons = document.querySelectorAll('.menu-button');
 let notesindex = 0; 
 const currentUrl = getMainURL(); 
 const notesTitle = ["General", currentUrl]
-const savedData = localStorage.getItem('inputData');
+let savedData = localStorage.getItem(notesTitle[notesindex]);
 const savedValues = savedData ? savedData.split('\n') : [];
 
 // Function to detect Hebrew characters
@@ -95,9 +95,10 @@ async function getMainURL() {
 
 
 // Function to save input data to localStorage
-function saveInputData() {
+function saveIznputData() {
   const content = Array.from(inputNotes).map(input => input.value).join('\n');
-  localStorage.setItem('inputData', content);
+// Saving notes by site name/general
+  localStorage.setItem(notesTitle[notesindex], content);
 }
 
 // Function to load saved data into inputs
@@ -119,9 +120,13 @@ MenuButtons.forEach((button, index) => {
 
       // Add the selected class to the clicked button
       button.classList.add(buttonSelectClassName);
+
+      //Changed NotesIndex to LoadData
+      notesindex = index;
     }
   });
 });
+
 // Initialize functionality for all input elements (notes)
 inputNotes.forEach((input, index) => {
   // 1. Load saved data for each input field
