@@ -13,10 +13,6 @@ table {
     width: 100%;         /* Table takes full available width */
     border-collapse: collapse;  /* Removes space between table cells */
   }
-  
-  td, th {
-    max-width: 150px;        /* Individual cell maximum width for overflow handling */
-  } 
 
   .notes-header {
     text-align: center;
