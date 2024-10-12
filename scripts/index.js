@@ -5,10 +5,10 @@ const buttonSelectClassName = "selected-menu-button"
 
 const inputNotes = document.querySelectorAll('.input-note');
 const MenuButtons = document.querySelectorAll('.menu-button');
+const thElements = document.querySelectorAll('.notes-header th');
 
-let notesindex = 0; 
-const currentUrl = getMainURL(); 
-const notesTitle = ["General", currentUrl]
+let notesindex = 0;
+const notesTitle = Array.from(thElements).map(th => th.id); //An array of all notes title, all ths.
 let savedData = localStorage.getItem(notesTitle[notesindex]);
 const savedValues = savedData ? savedData.split('\n') : [];
 
@@ -45,11 +45,11 @@ function handlePlaceholderVisibility(input) {
   const placeholderText = input.getAttribute('placeholder');
   input.setAttribute('placeholder', ''); // Hide placeholder initially
 
-  input.addEventListener('mouseenter', function() {
+  input.addEventListener('mouseenter', function () {
     input.setAttribute('placeholder', placeholderText); // Show placeholder on hover
   });
 
-  input.addEventListener('mouseleave', function() {
+  input.addEventListener('mouseleave', function () {
     input.setAttribute('placeholder', ''); // Hide placeholder when not hovering
   });
 }
@@ -63,10 +63,10 @@ function handleTextInputEvents(input) {
 }
 
 //Function to move One Note up or down
-function moveOneNote(index, direction){
+function moveOneNote(index, direction) {
   //Direction decides if the movment will be towards positive or negative.
   NoteIndex = index + (1 * direction)
-  
+
   if (NoteIndex < 0)
     NoteIndex = inputNotes.length - 1
   else if (NoteIndex >= inputNotes.length)
@@ -75,8 +75,8 @@ function moveOneNote(index, direction){
   nextInputNote.focus()
 }
 
-//Function to retrive MainURL
-async function getMainURL() {
+//Function to retrive MainURL and place it inside the site-title variable.
+async function retriveMainURL() {
   let queryOptions = { active: true, lastFocusedWindow: true };
   let [tab] = await chrome.tabs.query(queryOptions);
   const FullURL = tab.url;
@@ -90,14 +90,15 @@ async function getMainURL() {
   }
 
   let mainURL = FullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
-  return mainURL;
+
+  //Names site-title by the current URL
+  document.getElementById('site-title').textContent = val;
 }
 
-
 // Function to save input data to localStorage
-function saveIznputData() {
+function saveInputData() {
   const content = Array.from(inputNotes).map(input => input.value).join('\n');
-// Saving notes by site name/general
+  // Saving notes by site name/general
   localStorage.setItem(notesTitle[notesindex], content);
 }
 
@@ -112,7 +113,7 @@ function loadInputData(input, index) {
 MenuButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     const isButtonSelected = button.classList.contains(buttonSelectClassName);
-    
+
     // If the button is not already selected
     if (!isButtonSelected) {
       // Remove the class from all other buttons
@@ -127,11 +128,14 @@ MenuButtons.forEach((button, index) => {
   });
 });
 
+//Retrive Main Url for url title
+retriveMainURL();
+
 // Initialize functionality for all input elements (notes)
 inputNotes.forEach((input, index) => {
   // 1. Load saved data for each input field
   loadInputData(input, index);
-  
+
   // 2. Manage placeholder visibility on hover
   handlePlaceholderVisibility(input);
 
@@ -145,17 +149,17 @@ inputNotes.forEach((input, index) => {
   });
 
   input.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter'){
+    if (event.key === 'Enter') {
       event.preventDefault();
       moveOneNote(index, positiveDirection)
     }
 
-    if (event.key == 'ArrowDown'){
+    if (event.key == 'ArrowDown') {
       event.preventDefault();
       moveOneNote(index, positiveDirection)
     }
 
-    if(event.key == "ArrowUp"){
+    if (event.key == "ArrowUp") {
       event.preventDefault();
       moveOneNote(index, negativeDirection)
     }

@@ -109,3 +109,8 @@ table {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
     transform: scale(1.05);          /* Slightly enlarged */
   }
+
+  .hidden {
+    display: none;
+    visibility: hidden;
+  }
