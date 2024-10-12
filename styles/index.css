@@ -26,7 +26,10 @@ table {
     font-family: "Lucida Console", "Courier New", monospace;
   }
 
- 
+  #site-title {
+    font-size: clamp(20px, 7.5vw, 35px); /* Ensures a minimum and maximum font size */
+  }
+  
   .note {
     max-width: 300px;      /* Maximum row width */
     height: 46px;          /* Maximum row height */

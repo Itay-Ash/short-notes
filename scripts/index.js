@@ -2,13 +2,14 @@ const startChar = '●';
 const positiveDirection = 1;
 const negativeDirection = -1;
 const buttonSelectClassName = "selected-menu-button"
+const hiddenClassName = "hidden"
 
 const inputNotes = document.querySelectorAll('.input-note');
 const MenuButtons = document.querySelectorAll('.menu-button');
-const thElements = document.querySelectorAll('.notes-header th');
+const thTitles = document.querySelectorAll('.notes-header th');
 
 let notesindex = 0;
-const notesTitle = Array.from(thElements).map(th => th.id); //An array of all notes title, all ths.
+const notesTitle = Array.from(thTitles).map(th => th.id); //An array of all notes title, all ths.
 let savedData = localStorage.getItem(notesTitle[notesindex]);
 const savedValues = savedData ? savedData.split('\n') : [];
 
@@ -110,6 +111,10 @@ function loadInputData(input, index) {
   }
 }
 
+//Retrive Main Url
+retriveMainURL();
+
+// Intialize all menu buttons
 MenuButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     const isButtonSelected = button.classList.contains(buttonSelectClassName);
@@ -118,18 +123,23 @@ MenuButtons.forEach((button, index) => {
     if (!isButtonSelected) {
       // Remove the class from all other buttons
       MenuButtons.forEach(btn => btn.classList.remove(buttonSelectClassName));
-
       // Add the selected class to the clicked button
       button.classList.add(buttonSelectClassName);
+
+      //Make all other title hidden
+      thTitles.forEach((title) => {
+        if(!title.classList.contains(hiddenClassName))
+        title.classList.add(hiddenClassName);
+      })
+      
+      //Make current title shown
+      thTitles[index].classList.remove(hiddenClassName);
 
       //Changed NotesIndex to LoadData
       notesindex = index;
     }
   });
 });
-
-//Retrive Main Url for url title
-retriveMainURL();
 
 // Initialize functionality for all input elements (notes)
 inputNotes.forEach((input, index) => {
