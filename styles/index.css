@@ -24,6 +24,7 @@ table {
     font-size: 35px;
     font-weight: bold;
     font-family: "Lucida Console", "Courier New", monospace;
+    height: 35px;
   }
 
   #site-title {
