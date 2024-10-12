@@ -8,10 +8,12 @@ const inputNotes = document.querySelectorAll('.input-note');
 const MenuButtons = document.querySelectorAll('.menu-button');
 const thTitles = document.querySelectorAll('.notes-header th');
 
-let notesindex = 0;
-const notesTitle = Array.from(thTitles).map(th => th.id); //An array of all notes title, all ths.
-let savedData = localStorage.getItem(notesTitle[notesindex]);
-const savedValues = savedData ? savedData.split('\n') : [];
+let notesIndex = 0;
+let savedData;
+let savedValues;
+
+//Retrive Main Url
+retriveMainURL();
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
@@ -57,7 +59,6 @@ function handlePlaceholderVisibility(input) {
 
 // Function to manage input events (save data, adjust text direction, and ensure startChar)
 function handleTextInputEvents(input) {
-  saveInputData(); // Save input data to localStorage
   const text = input.value;
   ensureStartChar(input, text); // Ensure text starts with startChar
   adjustTextDirection(input, text); // Adjust text direction based on language
@@ -100,7 +101,7 @@ async function retriveMainURL() {
 function saveInputData() {
   const content = Array.from(inputNotes).map(input => input.value).join('\n');
   // Saving notes by site name/general
-  localStorage.setItem(notesTitle[notesindex], content);
+  localStorage.setItem(thTitles[notesIndex].textContent, content);
 }
 
 // Function to load saved data into inputs
@@ -111,8 +112,20 @@ function loadInputData(input, index) {
   }
 }
 
-//Retrive Main Url
-retriveMainURL();
+function loadCurrentNotesData(){
+  savedData = localStorage.getItem(thTitles[notesIndex].textContent);
+  savedValues = savedData ? savedData.split('\n') : [];
+}
+
+function ForceNotesLoadData(){
+  inputNotes.forEach((input, index) => {
+    input.value = "";
+  loadInputData(input, index);
+  });
+}
+
+//Load current notes notes data
+loadCurrentNotesData();
 
 // Intialize all menu buttons
 MenuButtons.forEach((button, index) => {
@@ -135,8 +148,10 @@ MenuButtons.forEach((button, index) => {
       //Make current title shown
       thTitles[index].classList.remove(hiddenClassName);
 
-      //Changed NotesIndex to LoadData
-      notesindex = index;
+      //Load new notes data.
+      notesIndex = index;
+      loadCurrentNotesData();
+      ForceNotesLoadData();
     }
   });
 });
@@ -152,10 +167,12 @@ inputNotes.forEach((input, index) => {
   // 3. Add event listeners for input and paste events
   input.addEventListener('input', () => {
     handleTextInputEvents(input);
+    saveInputData(); // Save input data to localStorage
   });
 
   input.addEventListener('paste', () => {
     handleTextInputEvents(input);
+    saveInputData(); // Save input data to localStorage
   });
 
   input.addEventListener('keydown', (event) => {
