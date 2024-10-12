@@ -1,19 +1,19 @@
 const startChar = '●';
 const positiveDirection = 1;
 const negativeDirection = -1;
-const buttonSelectClassName = "selected-menu-button"
-const hiddenClassName = "hidden"
+const buttonSelectClassName = "selected-menu-button";
+const hiddenClassName = "hidden";
 
 const inputNotes = document.querySelectorAll('.input-note');
-const MenuButtons = document.querySelectorAll('.menu-button');
+const menuButtons = document.querySelectorAll('.menu-button');
 const thTitles = document.querySelectorAll('.notes-header th');
 
 let notesIndex = 0;
 let savedData;
 let savedValues;
 
-//Retrive Main Url
-retriveMainURL();
+// Retrieve Main URL
+retrieveMainURL();
 
 // Function to detect Hebrew characters
 function containsHebrew(text) {
@@ -23,11 +23,11 @@ function containsHebrew(text) {
 // Function to check if the input contains Hebrew and set text direction and alignment
 function adjustTextDirection(input, text) {
   if (containsHebrew(text)) {
-    input.style.direction = 'rtl';  // Right-to-left for Hebrew text
+    input.style.direction = 'rtl'; // Right-to-left for Hebrew text
     input.style.textAlign = 'right'; // Align text to the right for Hebrew
   } else {
-    input.style.direction = 'ltr';  // Left-to-right for non-Hebrew text
-    input.style.textAlign = 'left';  // Align text to the left for non-Hebrew
+    input.style.direction = 'ltr'; // Left-to-right for non-Hebrew text
+    input.style.textAlign = 'left'; // Align text to the left for non-Hebrew
   }
 }
 
@@ -64,36 +64,38 @@ function handleTextInputEvents(input) {
   adjustTextDirection(input, text); // Adjust text direction based on language
 }
 
-//Function to move One Note up or down
+// Function to move one note up or down
 function moveOneNote(index, direction) {
-  //Direction decides if the movment will be towards positive or negative.
-  NoteIndex = index + (1 * direction)
+  // Direction decides if the movement will be towards positive or negative.
+  let noteIndex = index + (1 * direction);
 
-  if (NoteIndex < 0)
-    NoteIndex = inputNotes.length - 1
-  else if (NoteIndex >= inputNotes.length)
-    NoteIndex = 0;
-  const nextInputNote = inputNotes[NoteIndex];
-  nextInputNote.focus()
+  if (noteIndex < 0) {
+    noteIndex = inputNotes.length - 1;
+  } else if (noteIndex >= inputNotes.length) {
+    noteIndex = 0;
+  }
+
+  const nextInputNote = inputNotes[noteIndex];
+  nextInputNote.focus();
 }
 
-//Function to retrive MainURL and place it inside the site-title variable.
-async function retriveMainURL() {
+// Function to retrieve Main URL and place it inside the site-title variable.
+async function retrieveMainURL() {
   let queryOptions = { active: true, lastFocusedWindow: true };
   let [tab] = await chrome.tabs.query(queryOptions);
-  const FullURL = tab.url;
+  const fullURL = tab.url;
   // String manipulation to extract the main URL
-  let protocolEndIndex = FullURL.indexOf("://") + 3; // Find the end of the protocol
-  let hostEndIndex = FullURL.indexOf("/", protocolEndIndex); // Find the end of the host
+  let protocolEndIndex = fullURL.indexOf("://") + 3; // Find the end of the protocol
+  let hostEndIndex = fullURL.indexOf("/", protocolEndIndex); // Find the end of the host
 
   // Handle case where there is no path (like "https://example.com")
   if (hostEndIndex === -1) {
-    hostEndIndex = FullURL.length; // Use the full length if no path
+    hostEndIndex = fullURL.length; // Use the full length if no path
   }
 
-  let mainURL = FullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
+  let mainURL = fullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
 
-  //Names site-title by the current URL
+  // Names site-title by the current URL
   document.getElementById('site-title').textContent = mainURL;
 }
 
@@ -112,46 +114,47 @@ function loadInputData(input, index) {
   }
 }
 
-function loadCurrentNotesData(){
+function loadCurrentNotesData() {
   savedData = localStorage.getItem(thTitles[notesIndex].textContent);
   savedValues = savedData ? savedData.split('\n') : [];
 }
 
-function ForceNotesLoadData(){
+function forceNotesLoadData() {
   inputNotes.forEach((input, index) => {
     input.value = "";
-  loadInputData(input, index);
+    loadInputData(input, index);
   });
 }
 
-//Load current notes notes data
+// Load current notes data
 loadCurrentNotesData();
 
-// Intialize all menu buttons
-MenuButtons.forEach((button, index) => {
+// Initialize all menu buttons
+menuButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     const isButtonSelected = button.classList.contains(buttonSelectClassName);
 
     // If the button is not already selected
     if (!isButtonSelected) {
       // Remove the class from all other buttons
-      MenuButtons.forEach(btn => btn.classList.remove(buttonSelectClassName));
+      menuButtons.forEach(btn => btn.classList.remove(buttonSelectClassName));
       // Add the selected class to the clicked button
       button.classList.add(buttonSelectClassName);
 
-      //Make all other title hidden
+      // Make all other titles hidden
       thTitles.forEach((title) => {
-        if(!title.classList.contains(hiddenClassName))
-        title.classList.add(hiddenClassName);
-      })
-      
-      //Make current title shown
+        if (!title.classList.contains(hiddenClassName)) {
+          title.classList.add(hiddenClassName);
+        }
+      });
+
+      // Make current title shown
       thTitles[index].classList.remove(hiddenClassName);
 
-      //Load new notes data.
+      // Load new notes data.
       notesIndex = index;
       loadCurrentNotesData();
-      ForceNotesLoadData();
+      forceNotesLoadData();
     }
   });
 });
@@ -178,17 +181,17 @@ inputNotes.forEach((input, index) => {
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      moveOneNote(index, positiveDirection)
+      moveOneNote(index, positiveDirection);
     }
 
-    if (event.key == 'ArrowDown') {
+    if (event.key === 'ArrowDown') {
       event.preventDefault();
-      moveOneNote(index, positiveDirection)
+      moveOneNote(index, positiveDirection);
     }
 
-    if (event.key == "ArrowUp") {
+    if (event.key === "ArrowUp") {
       event.preventDefault();
-      moveOneNote(index, negativeDirection)
+      moveOneNote(index, negativeDirection);
     }
   });
 });
