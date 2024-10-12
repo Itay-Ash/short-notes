@@ -92,7 +92,7 @@ async function retriveMainURL() {
   let mainURL = FullURL.substring(protocolEndIndex, hostEndIndex); // Extract the main URL
 
   //Names site-title by the current URL
-  document.getElementById('site-title').textContent = val;
+  document.getElementById('site-title').textContent = mainURL;
 }
 
 // Function to save input data to localStorage
