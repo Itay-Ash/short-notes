@@ -1,6 +1,116 @@
 body {
-    background-image: url('../images/Background.jpeg');
+    background-image: url('../images/Wood_Background.jpeg');
     background-size: cover; /* Cover the entire area */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent repeating */
+    height: 300px;
+    width: 300px;
+    margin: 0;
+    padding: 0;
 }
+
+table {
+    width: 100%;         /* Table takes full available width */
+    border-collapse: collapse;  /* Removes space between table cells */
+  }
+
+  .notes-header {
+    text-align: center;
+  }
+
+  .notes-header th{
+    color: #ff0f0f;
+    text-shadow: 1px 1px black;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: "Lucida Console", "Courier New", monospace;
+    height: 35px;
+  }
+
+  #site-title {
+    font-size: clamp(20px, 7.5vw, 35px); /* Ensures a minimum and maximum font size */
+  }
+  
+  .note {
+    max-width: 300px;      /* Maximum row width */
+    height: 46px;          /* Maximum row height */
+    overflow: hidden;      /* Hide any overflow text */
+  }
+
+  .note td {
+    height: 46px;          /* Ensures all rows conform to height */
+    max-width: 300px;
+  }
+
+  .input-note {
+    width: 100%;          /* Make input the same width as the td */
+    border: none;         /* Remove the border */
+    background-color: transparent; /* No background color */
+    padding: 0;           /* Remove padding to match the size exactly */
+    box-sizing: border-box; /* Ensure the input size includes padding and borders */
+    text-align: left;
+    color: #fff523;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 1px 1px black;
+    font-family: " 'Lucida Handwriting',cursive";       
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   
+  }
+
+  .input-note::placeholder {
+    color: #fff523;
+    font-weight: normal;
+    opacity: 0.8;
+    font-style: italic;
+  }
+  
+  .input-note:focus {
+    outline: none;        /* Remove the outline when the input is focused */
+  }
+
+  .menu-div {
+    display: flex;
+    justify-content: space-between;  /* Ensures buttons are spaced out */
+    flex-grow: 1;
+  }
+  
+  .menu-button {
+    flex-grow: 1;                   /* Make buttons take equal width */
+    border: none;                    /* No border */
+    background: none;                /* No background */
+    font-size: 1.1rem;               /* Increase font size */
+    font-family: 'Poppins', sans-serif; /* Modern font (import in HTML) */
+    font-weight: 500;                /* Medium weight for better readability */
+    color: #ff0f0f;                     /* Dark text color */
+    letter-spacing: 1px;             /* Add some letter spacing */
+    cursor: pointer;                 /* Cursor pointer on hover */
+    transition: all 0.3s ease;       /* Smooth transition for hover effects */
+    text-transform: uppercase;       /* Make text uppercase */
+    outline: none;                   /* Remove focus outline */
+  }
+  
+  /* Hover effect */
+  .menu-button:hover {
+    color: #fff;                     /* Change text color on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    transform: scale(1.05);          /* Slightly enlarge the button */
+  }
+  
+  /* Active state (when clicked) */
+  .menu-button:active {
+    transform: scale(0.98);          /* Slightly reduce size when pressed */
+    box-shadow: none;                /* Remove shadow on press */
+  }
+
+  .selected-menu-button {
+    color: #fff;                     /* White text */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transform: scale(1.05);          /* Slightly enlarged */
+  }
+
+  .hidden {
+    display: none;
+    visibility: hidden;
+  }

@@ -1,6 +1,42 @@
-<html>
-  <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="styles/index.css">
-    <h1>Short Notes</h1>
+
+    <script src="scripts/index.js" defer></script>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr class="notes-header">
+          <th id="main-title">SHORT-NOTES</th>
+          <th id="site-title" class="hidden"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="note">
+          <td> <input type="text" class="input-note" placeholder="TEXT GOES HERE" /></td>
+        </tr>
+        <tr class="note">
+          <td><input type="text" class="input-note" placeholder="TEXT GOES HERE" /></td>
+        </tr>
+        <tr class="note">
+          <td><input type="text" class="input-note" placeholder="TEXT GOES HERE" /></td>
+        </tr>
+        <tr class="note">
+          <td><input type="text" class="input-note" placeholder="TEXT GOES HERE" /></td>
+        </tr>
+        <tr class="note">
+          <td><input type="text" class="input-note" placeholder="TEXT GOES HERE" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="menu-div">
+      <button class="menu-button selected-menu-button">General</button>
+      <button class="menu-button">Site</button>
+    </div>
   </body>
 </html>
