@@ -1,6 +1,11 @@
 # 📓 Notes App
 
-A simple and intuitive notes app that allows users to add, organize, and manage their notes efficiently. This app features site-based note-taking, dynamic title updating, and seamless functionality to ensure that users can keep track of important information while browsing.
+A simple and intuitive notes chrome extension that allows users to add, organize, and manage their notes efficiently.
+This app features site-based note-taking, dynamic title updating, and seamless functionality to ensure that users can keep track of important information while browsing.
+
+## 📷 Current Design
+
+![Current Design](https://github.com/user-attachments/assets/3843fd24-8b33-4fe1-ae11-07f81e104b3f)
 
 ## 🌟 Features
 
